@@ -1,0 +1,249 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.ant-btn-primary {
+  background-color: rgb(8, 8, 224);
+}
+
+.ant-btn-primary:not(:disabled):hover {
+  background-color: rgb(45, 45, 240);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.page {
+  padding: 15px;
+  width: 100%;
+  overflow: auto;
+  height: calc(100vh - 94px);
+}
+
+.page::-webkit-scrollbar-track {
+  border-radius: 0.125rem;
+  background-color: rgb(221, 220, 220);
+}
+
+.page::-webkit-scrollbar {
+  width: 0.4rem;
+  border-radius: 0.125rem;
+}
+
+.page::-webkit-scrollbar-thumb {
+  border-radius: 0.125rem;
+  background-color: gray;
+}
+
+.loading-spin {
+  animation: spin 0.9s infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.delete-icon,
+.update-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  padding: 5px 10px;
+  width: fit-content;
+  height: fit-content;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.delete-icon {
+  background-color: red;
+}
+
+.delete-icon:hover {
+  background-color: rgb(255, 77, 77);
+}
+
+.update-icon {
+  background-color: rgb(8, 8, 224);
+}
+
+.update-icon:hover {
+  background-color: rgb(55, 55, 238);
+}
+
+.ant-btn-primary.ant-btn-dangerous {
+  background-color: red;
+}
+
+.ant-btn-primary.ant-btn-dangerous:hover {
+  background-color: red;
+}
+
+.pagination-button {
+  cursor: pointer;
+  text-align: center;
+  width: 150px;
+  padding: 5px 10px;
+  border-radius: 7px;
+  background-color: rgb(8, 8, 224);
+  color: white;
+  /* border: rgb(8, 8, 224) 1px solid; */
+  margin: 20px auto 0px;
+  transition: 0.4s;
+}
+
+.pagination-button:hover {
+  background-color: rgb(55, 55, 238);
+}
+
+.add-button {
+  background-color: rgb(8, 8, 224);
+  cursor: pointer;
+  color: #ffffff;
+  padding: 7px 10px;
+  border-radius: 7px;
+}
+
+.page-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.active-row {
+  border: 10px gray solid;
+  background-color: rgb(238, 236, 236);
+  border-radius: 5px;
+}
+
+.ant-pagination .ant-pagination-options {
+  display: none;
+}
+
+.add-column {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  min-height: 42px;
+}
+
+.banner-add-container {
+  display: flex;
+  gap: 25px;
+  flex-direction: row;
+  justify-content: space-around;
+  font-weight: 450;
+}
+
+.add-right {
+  min-width: 450px;
+}
+
+.ant-table-fixed {
+  table-layout: fixed;
+}
+
+.ant-table-tbody > tr > td {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.page-header-content {
+  margin-bottom: 15px;
+}
+
+.page-header-content > h2 {
+  font-size: 18px;
+  font-weight: 600;
+  visibility: hidden;
+}
+
+.centeredContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-picture {
+  display: flex;
+  align-items: center;
+  height: 120px;
+}
+
+.jenayatkar_surat {
+  width: 200px;
+  height: 150px;
+}
+
+.jenayatkar_surat > img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.media-image-show-container {
+  position: relative;
+  max-width: 84px;
+  border: 1px solid #d9d9d9;
+  height: 84px;
+  width: 100%;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 0 8px 8px 0;
+}
+
+.madia-image-show-hover-container {
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: 0.3s;
+}
+
+.madia-image-show-hover-container:hover .media-image-show-icon-container {
+  opacity: 1;
+}
+
+.madia-image-show-hover-container:hover {
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+.madia-image-show-hover-container > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: absolute;
+  z-index: 1;
+}
+
+.media-image-show-icon-container {
+  transition: 0.3s;
+  display: flex;
+  position: relative;
+  position: absolute;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 16px;
+  gap: 7px;
+  cursor: pointer;
+  opacity: 0;
+  z-index: 2;
+}
+
+.media-show-icon :hover {
+  color: white;
+}

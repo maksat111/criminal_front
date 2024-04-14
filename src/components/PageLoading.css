@@ -1,0 +1,14 @@
+.pageLoading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  /* width: 95vw; */
+  height: 90vh;
+  color: rgb(2, 2, 113);
+}
+
+.pageLoading-container > img {
+  height: 170px;
+  margin-bottom: 75px;
+}

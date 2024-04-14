@@ -1,0 +1,14 @@
+jenayatcy:
+        -Surat(4 sany surat)
+        -Ady familiyasy atasynyn Ady
+        -doglan wagty
+        -Doglan yeri
+        -passport seriyasy
+        -Hasapda duran yeri
+        -wagtlayyn saklanyan yeri
+        -jenayatcy - (kanuny)
+        -ayratyn alamaty
+        -in yakyn hossary(hossarlary)
+        -Hokumin baslan wagty
+        -Bosamaly wagty
+        -Hasiyetnamasy 
