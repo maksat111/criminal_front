@@ -5,6 +5,7 @@ import PageLoading from "../components/PageLoading";
 
 const Navbar = lazy(() => import("../components/Navbar"));
 const Gozleg = lazy(() => import("../pages/gozleg/Gozleg"));
+const GozlegDetail = lazy(() => import("../pages/gozleg/GozlegDetail"));
 const Admin = lazy(() => import("../pages/admin/Admin"));
 const Login = lazy(() => import("../pages/login/Login"));
 const Users = lazy(() => import("../pages/admin/components/Users"));
@@ -31,10 +32,18 @@ function Router() {
       ),
       children: [
         {
-          path: "gozleg",
+          path: "/gozleg",
           element: (
             <Suspense fallback={<Loading size="50px" />}>
               <Gozleg />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/gozleg/detail/:id",
+          element: (
+            <Suspense fallback={<Loading size="50px" />}>
+              <GozlegDetail />
             </Suspense>
           ),
         },

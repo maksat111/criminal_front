@@ -8,7 +8,7 @@ import TableComponent from "../../../components/TableComponent";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
 
-function Kanunlar() {
+function Jenayatcylar() {
   const dateFormat = "YYYY-MM-DD";
   const [dataSource, setDataSource] = useState([]);
   const [open, setOpen] = useState(false);
@@ -20,9 +20,7 @@ function Kanunlar() {
   const [toDate, setToDate] = useState(null);
   const [newItem, setNewItem] = useState(null);
   const [fileList, setFileList] = useState([]);
-  const [fileList2, setFileList2] = useState([]);
-  const [fileList3, setFileList3] = useState([]);
-  const [fileList4, setFileList4] = useState([]);
+  const [progress, setProgress] = useState(0);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -30,6 +28,14 @@ function Kanunlar() {
   const handlePreviewCancel = () => setPreviewOpen(false);
 
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+
+  const getBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
 
   const handlePreview = async (file) => {
     file.preview = await getBase64(file.originFileObj);
@@ -46,18 +52,18 @@ function Kanunlar() {
   const handleOk = async () => {
     try {
       setConfirmLoading(true);
-      await axiosInstance.post(`jenayatcy/delete/${selectedItem._id}`);
+      await axiosInstance.delete(`jenayatcy/delete/${selectedItem._id}`);
       const newDataSource = dataSource.filter(
         (element) => element._id !== selectedItem._id
       );
       setDataSource(newDataSource);
-      message.success("Успешно удалено!");
+      message.success("Üstünlikli pozuldy!");
       setSelectedItem(null);
       setOpen(false);
       setConfirmLoading(false);
     } catch (err) {
       setConfirmLoading(false);
-      message.error("Произошла ошибка. Пожалуйста, попробуйте еще раз!");
+      message.error("Ýalnyşlyk ýüze çykdy, gaýtadan synanşyp görüň!");
       console.log(err);
     }
   };
@@ -82,12 +88,14 @@ function Kanunlar() {
   const columns = [
     {
       title: "Suraty",
-      dataIndex: "image1",
-      key: "image1",
+      dataIndex: "image",
+      key: "image",
       render: (_, record) => (
-        <div className="jenayatkar_surat">
-          <img className="" src={record.image1} alt="image" />
-        </div>
+        <img
+          className="jenayatkar_surat"
+          src={record?.image1}
+          alt="Image doesn't exist"
+        />
       ),
     },
     {
@@ -173,13 +181,13 @@ function Kanunlar() {
       delete newItem.image1;
     }
     if (newItem.image2) {
-      delete newItem.image1;
+      delete newItem.image2;
     }
     if (newItem.image3) {
-      delete newItem.image1;
+      delete newItem.image3;
     }
     if (newItem.image4) {
-      delete newItem.image1;
+      delete newItem.image4;
     }
 
     const keys = Object.keys(newItem);
@@ -221,10 +229,11 @@ function Kanunlar() {
         const res = await axiosInstance.post("jenayatcy/create", formData);
         newItem._id = res.data.data?._id;
         newItem.key = res.data.data?._id;
-        setDataSource([...dataSource, newItem]);
+        setDataSource([...dataSource, res.data.data]);
       }
       setConfirmLoading(false);
       setNewItem(null);
+      setFileList([]);
       message.success("Üstünlikli!");
       setAddOpen(false);
     } catch (err) {
@@ -235,6 +244,7 @@ function Kanunlar() {
   };
 
   const handleAddCancel = () => {
+    setFileList([]);
     setAddOpen(false);
     setNewItem(null);
   };
@@ -276,12 +286,10 @@ function Kanunlar() {
   );
 
   const handleMediaImagesShowDelete = async (e) => {
-    const splited = e.image.split("/");
+    console.log(e);
     const deleted = await axiosInstance
       .delete(
-        `jenayatcy/file/delete?file=${splited[3] + "/" + splited[4]}&id=${
-          newItem._id
-        }&field=${e.field}`
+        `jenayatcy/file/delete?file=${e.image}&id=${newItem._id}&field=${e.field}`
       )
       .then((res) => {
         setNewItem({ ...newItem, [e.field]: null });
@@ -290,6 +298,27 @@ function Kanunlar() {
             let a = previousState;
             const index = a.findIndex((item) => (item._id = newItem?._id));
             a[index].image1 = null;
+            return a;
+          });
+        e.field == "image2" &&
+          setDataSource((previousState) => {
+            let a = previousState;
+            const index = a.findIndex((item) => (item._id = newItem?._id));
+            a[index].image2 = null;
+            return a;
+          });
+        e.field == "image3" &&
+          setDataSource((previousState) => {
+            let a = previousState;
+            const index = a.findIndex((item) => (item._id = newItem?._id));
+            a[index].image3 = null;
+            return a;
+          });
+        e.field == "image4" &&
+          setDataSource((previousState) => {
+            let a = previousState;
+            const index = a.findIndex((item) => (item._id = newItem?._id));
+            a[index].image4 = null;
             return a;
           });
       });
@@ -347,28 +376,43 @@ function Kanunlar() {
             <div className="add-picture">
               {newItem?._id &&
                 [
-                  { image: newItem?.image1, field: "image1" },
-                  { image: newItem?.image2, field: "image2" },
-                  { image: newItem?.image3, field: "image3" },
-                  { image: newItem?.image4, field: "image4" },
-                ].map((item, index) => (
-                  <div className="media-image-show-container" key={index}>
-                    <div className="madia-image-show-hover-container">
-                      <div className="media-image-show-icon-container">
-                        <div className="media-show-icon">
-                          <AiOutlineEye />
-                        </div>
-                        <div
-                          className="media-show-icon"
-                          onClick={() => handleMediaImagesShowDelete(item)}
-                        >
-                          <AiOutlineDelete />
+                  {
+                    image: newItem?.image1,
+                    field: "image1",
+                  },
+                  {
+                    image: newItem?.image2,
+                    field: "image2",
+                  },
+                  {
+                    image: newItem?.image3,
+                    field: "image3",
+                  },
+                  {
+                    image: newItem?.image4,
+                    field: "image4",
+                  },
+                ].map(
+                  (item, index) =>
+                    item.image && (
+                      <div className="media-image-show-container" key={index}>
+                        <div className="madia-image-show-hover-container">
+                          <div className="media-image-show-icon-container">
+                            <div className="media-show-icon">
+                              <AiOutlineEye />
+                            </div>
+                            <div
+                              className="media-show-icon"
+                              onClick={() => handleMediaImagesShowDelete(item)}
+                            >
+                              <AiOutlineDelete />
+                            </div>
+                          </div>
+                          <img src={item.image} alt="main_image" />
                         </div>
                       </div>
-                      <img src={item.image} alt="main_image" />
-                    </div>
-                  </div>
-                ))}
+                    )
+                )}
               <Upload
                 customRequest={handleAddCustomRequest}
                 listType="picture-card"
@@ -477,17 +521,17 @@ function Kanunlar() {
             </div>
             <div className="add-column">
               <Input
-                name="bosamaly_wagty"
-                placeholder="Boşamaly wagty"
-                value={newItem?.bosamaly_wagty}
+                name="hasiyetnamasy"
+                placeholder="Häsiýetnamsy"
+                value={newItem?.hasiyetnamasy}
                 onChange={handleAddChange}
               />
             </div>
             <div className="add-column">
               <Input
-                name="hasiyetnamasy"
-                placeholder="Häsiýetnamsy"
-                value={newItem?.hasiyetnamasy}
+                name="bosamaly_wagty"
+                placeholder="Boşamaly wagty"
+                value={newItem?.bosamaly_wagty}
                 onChange={handleAddChange}
               />
             </div>
@@ -495,13 +539,13 @@ function Kanunlar() {
         </div>
       </Modal>
       <Modal
-        title="Вы уверены, что хотите удалить?"
+        title="Siz hakykatdanam pozmakçymy?"
         open={open}
         onOk={handleOk}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
-        cancelText={"Отмена"}
-        okText={"Да"}
+        cancelText={"Goýbolsun"}
+        okText={"Howa"}
         okType={"primary"}
         okButtonProps={{ danger: true }}
         style={{
@@ -526,4 +570,4 @@ function Kanunlar() {
   );
 }
 
-export default Kanunlar;
+export default Jenayatcylar;
