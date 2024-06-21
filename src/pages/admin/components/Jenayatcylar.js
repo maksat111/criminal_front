@@ -177,6 +177,13 @@ function Jenayatcylar() {
       );
     }
 
+    const images = {
+      image1: newItem.image1,
+      image2: newItem.image2,
+      image3: newItem.image3,
+      image4: newItem.image4,
+    };
+
     if (newItem.image1) {
       delete newItem.image1;
     }
@@ -205,10 +212,10 @@ function Jenayatcylar() {
         const index = dataSource.findIndex((item) => item._id == newItem._id);
         setDataSource((previousState) => {
           const a = previousState;
-          a[index].image1 = newItem.image1;
-          a[index].image2 = newItem.image2;
-          a[index].image3 = newItem.image3;
-          a[index].image4 = newItem.image4;
+          a[index].image1 = images.image1;
+          a[index].image2 = images.image2;
+          a[index].image3 = images.image3;
+          a[index].image4 = images.image4;
           a[index].name = newItem.name;
           a[index].surname = newItem.surname;
           a[index].father_name = newItem.father_name;

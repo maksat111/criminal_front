@@ -2,7 +2,7 @@ import axios from "axios";
 import { getToken } from "../utils/getToken";
 
 const token = getToken();
-const BASE_URL = "http://127.0.0.1:5000/api/admin/";
+const BASE_URL = process.env.REACT_APP_BASE_URL + "api/admin/";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -14,8 +14,21 @@ const axiosInstance = axios.create({
   },
 });
 
+const axiosInstancePublic = axios.create({
+  baseURL: BASE_URL,
+  timeout: 60000,
+  headers: {
+    "Content-Type": "multipart/form-data",
+    Accept: "*/*",
+  },
+});
+
 const loginPost = async (username, password) => {
-  const res = await axios.post(`${BASE_URL}login`, { username, password });
+  console.log(BASE_URL);
+  const res = await axiosInstancePublic.post(`login`, {
+    username,
+    password,
+  });
   return res;
 };
 export { axiosInstance, loginPost };
